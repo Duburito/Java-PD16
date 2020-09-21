@@ -7,7 +7,17 @@ import java.io.FileNotFoundException;
 import java.util.Scanner; // Import the Scanner class to read text files
 import java.io.IOException;
 import java.io.FileWriter;   // Import the FileWriter class
+import java.time.LocalDate; // Date only
 // pieprasīt lietotājam ievadīt vārdu, tālruņa numuru saziņai, vēlamo vizītes datumu un laiku
+//
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.time.YearMonth;
+//
 class MyFrame
     extends JFrame
     implements ActionListener {
@@ -52,8 +62,9 @@ class MyFrame
         = { "Jan", "feb", "Mar", "Apr",
             "May", "Jun", "July", "Aug",
             "Sup", "Oct", "Nov", "Dec" };
+    // Year in past to check validation, reuse same for month and day (Need to improve it)
     private String years[]
-        = { "2021", "2022", "2023", "2024",
+        = { "2019", "2020","2021", "2022", "2023", "2024",
             "2025", "2026", "2027", "2028",
             "2029" };
     private String hours[]
@@ -62,6 +73,9 @@ class MyFrame
                 "19"};
     private String minutes2[]
             = { "00", "15", "30", "45"};
+    
+    int year2 = YearMonth.now().getYear();
+
  
     // constructor, to initialize the components
     // with default values.
@@ -226,7 +240,31 @@ class MyFrame
         resadd.setLocation(580, 175);
         resadd.setLineWrap(true);
         c.add(resadd);
-       
+        
+        setVisible(true);
+    }
+/*
+        public void GetCurrentDateTime {
+
+            private static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+            public static void main(String[] args) {
+
+                Date date = new Date();
+                System.out.println(sdf.format(date));
+
+                Calendar cal = Calendar.getInstance();
+                System.out.println(sdf.format(cal.getTime()));
+
+                LocalDateTime now = LocalDateTime.now();
+                System.out.println(dtf.format(now));
+
+                LocalDate localDate = LocalDate.now();
+                System.out.println(DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate));
+
+            }        
+*/
 /*      resadd = new JTextArea();
         resadd.setFont(new Font("Arial", Font.PLAIN, 15));
         resadd.setSize(200, 75);
@@ -234,8 +272,7 @@ class MyFrame
         resadd.setLineWrap(true);
         c.add(namecheck); */
  
-        setVisible(true);
-    }
+
  
     // method actionPerformed()
     // to get the action performed
@@ -246,11 +283,18 @@ class MyFrame
 {res.setText("Wrong name, type again!");
 };
     */
+    
     if (tname.getText() == null || tname.getText().trim().isEmpty() || !tname.getText().matches("[a-zA-Z ,]+")) {
     res.setText("Empty name field or invalid name!");
     } else if (tmno.getText() == null || tmno.getText().trim().isEmpty() || !tmno.getText().matches("^[0-9]{8}$")) {
     res.setText("Empty phone field or invalid phone!");
-    } else {
+    } else if (year2 > Integer.parseInt(year.getSelectedItem().toString())) {
+   	 res.setText("Invalid date, past date, choose current one that is in future!"); } // <-- Improve for month and time (Combined solution required)
+    else  {
+    	/*
+    	
+    	 */
+    	
         if (e.getSource() == sub) {
             if (term.isSelected()) {
                 String data1;
